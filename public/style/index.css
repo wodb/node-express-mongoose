@@ -1,0 +1,26 @@
+body {
+  background-size: contain;
+  background: url('/image/bj.jpg') no-repeat;
+}
+
+.contentbox {
+  width: 30%;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 40px 0 0;
+  background-color: white;
+  box-shadow: 0 0 10px #000
+}
+
+.colorwhite {
+  color: white
+}
+
+h2.title {
+  margin-top: 150px
+}
+
+.form-group {
+  margin-bottom: 30px;
+}
