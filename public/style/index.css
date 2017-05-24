@@ -3,7 +3,7 @@ body {
   background: url('/image/bj.jpg') no-repeat;
 }
 
-.contentbox {
+.contentbox,.registerBox {
   width: 30%;
   margin: 0 auto;
   border: 1px solid #ccc;
@@ -11,6 +11,10 @@ body {
   padding: 40px 0 0;
   background-color: white;
   box-shadow: 0 0 10px #000
+}
+
+.registerBox{
+  width: 60%
 }
 
 .colorwhite {

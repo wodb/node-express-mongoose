@@ -27,6 +27,24 @@ app.use(express.static(path.join(__dirname,'/public')))
 // 路由
 router(app)
 
+app.use(function (err, req, res, next) {
+	console.log(err)
+    // treat as 404
+    if (err.message
+      && (~err.message.indexOf('not found')
+      || (~err.message.indexOf('Cast to ObjectId failed')))) {
+      return next();
+    }
+    console.error(err.stack);
+    // error page
+    res.status(500).render('500');
+  });
+
+// assume 404 since no middleware responded
+app.use(function (req, res, next) {
+	res.status(404).render('404');
+});
+
 app.listen(config.port,'192.168.2.179',(err) => {
 	if (err) console.log(`err:${err}`)
 	console.log(`server is running:${config.port}`)

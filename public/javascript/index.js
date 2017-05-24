@@ -8,12 +8,13 @@
       return alert('请填写用户名或密码')
     }
     var xhr = new XMLHttpRequest()
-    xhr.open('post', 'http://192.168.2.179:2080/api/sigin')
+    xhr.open('post', `${config.serverURL}api/sigin`)
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
     xhr.send(`username=${username.value}&password=${password.value}`)
-    xhr.readystatechange = function() {
+    xhr.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(1111)
+        var result = JSON.parse(this.responseText)
+        if (result.message == '成功') location.href = config.serverURL
       }
     }
   }
