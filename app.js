@@ -2,7 +2,6 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const cookieParser = require('cookie-parser')
 const app = express()
 
 const config = require('./config/config')
@@ -24,9 +23,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // 设置静态文件
 app.use(express.static(path.join(__dirname, '/public')))
-
-// 设置cookie
-app.use(cookieParser())
 
 // 路由
 router(app)
