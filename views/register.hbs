@@ -68,8 +68,8 @@
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				var response = JSON.parse(this.responseText)
-				if (response.message == '成功') {
-					alert('请求成功')
+				if (response.success == true) {
+					alert(response.message)
 					location.href = `${config.serverURL}api/sigin`
 				}else {
 					alert(response.message)
