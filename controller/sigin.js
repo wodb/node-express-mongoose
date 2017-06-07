@@ -29,6 +29,7 @@ router.post('/sigin', (request, response) => {
                     return
                 }
                 if (users.username == username) {
+                    request.session.user = username
                     error.message = '成功'
                 } else {
                     error.message = '没有此用户'
