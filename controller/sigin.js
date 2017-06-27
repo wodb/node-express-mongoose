@@ -17,20 +17,25 @@ router.get('/sigin', (req, res) => {
  * psot 开始登陆
  */
 router.post('/sigin', (request, response) => {
-    const username = request.body.username
+    const {username,password} = request.body
     const error = {
         message: ''
     }
     model.userModel.findOne({username})
             .exec(function (err, users) {
+                console.log(err,users)
                 if (err) {
                     error.message = '数据库出错'
                     response.send(error)
                     return
                 }
-                if (users.username == username) {
-                    request.session.user = username
-                    error.message = '成功'
+                if (users && users.username == username) {
+                    if (password == users.password) {
+                        request.session.user = username
+                        error.message = '成功'
+                    }else {
+                        error.message = '用户名或者密码不正确'
+                    }
                 } else {
                     error.message = '没有此用户'
                 }

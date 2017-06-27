@@ -14,7 +14,11 @@
     xhr.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         var result = JSON.parse(this.responseText)
-        if (result.message == '成功') location.href = config.serverURL
+        if (result.message == '成功') {
+          location.href = config.serverURL
+        }else {
+          alert(result.message)
+        }
       }
     }
   }
