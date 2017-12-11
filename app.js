@@ -25,20 +25,6 @@ app.use(session({
 
 // 设置静态文件
 app.use(express.static(path.join(__dirname, '/public')))
-// 验证登陆,要写在静态文件之下
-app.use(function (req, res, next) {
-    console.log(req.url)
-    if (!req.session.user) {
-        if (req.url == '/api/sigin') {
-            next()// 通过验证因为是登陆
-            console.log(111)
-        }else {
-            res.redirect('/api/sigin')
-        }
-    }else {
-        next()
-    }
-})
 
 // 设置模版引擎
 app.set('view engine', 'hbs')
@@ -66,8 +52,8 @@ app.use(function (err, req, res, next) {
     res.status(500).render('500');
 });
 
-
-app.listen(config.port, config.serverURL, (err) => {
+// config.serverURL,
+app.listen(config.port, (err) => {
     if (err) return console.log(`err:${err}`)
     console.log(`server is running:${config.port}`)
 })

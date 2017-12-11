@@ -1,8 +1,8 @@
 const { Router } = require('express')
-const co = require('co')
+// const co = require('co')
 
 // 引入模型
-const model = require('../modules/index')
+const UserModel = require('../modules/index')
 
 const router = module.exports = Router()
 router.prefix = '/api'
@@ -16,31 +16,21 @@ router.get('/sigin', (req, res) => {
 /**
  * psot 开始登陆
  */
-router.post('/sigin', (request, response) => {
-    const {username,password} = request.body
-    const error = {
-        message: ''
-    }
-    model.userModel.findOne({username})
-            .exec(function (err, users) {
-                console.log(err,users)
-                if (err) {
-                    error.message = '数据库出错'
-                    response.send(error)
-                    return
-                }
-                if (users && users.username == username) {
-                    if (password == users.password) {
-                        request.session.user = username
-                        error.message = '成功'
-                    }else {
-                        error.message = '用户名或者密码不正确'
-                    }
-                } else {
-                    error.message = '没有此用户'
-                }
-                response.send(error)
-            })
+router.post('/sigin', (req, res, next) => {
+    const {username,password} = req.body
+
+    UserModel.getUserName(username)
+    .then((user) => {
+        if (!user) {
+            res.send({code:101,message:'没有此用户'})
+        }
+        if (user.password == password) {
+            req.session.user = user
+            res.send({code:100,message:'登陆成功'})
+        }else {
+            res.send({code:101,message:'用户名或密码不正确'})
+        }
+    })
 })
 /**
  * get 注册页面

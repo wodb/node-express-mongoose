@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-let userSchema = new mongoose.Schema({
+mongoose.Promise = global.Promise
+
+let userSchema = new Schema({
     username: {
         type: String,
         unique: true,// 不可重复约束
@@ -28,8 +31,15 @@ let userSchema = new mongoose.Schema({
     }
 }, {versionKey: false})// 关闭版本锁
 
-let userModel = mongoose.model('user', userSchema, 'users')
-
-module.exports = {
-    userModel
+userSchema.statics = {
+    /**
+     * Get user
+     * @param {ObjectId} id - The objectId of user.
+     * @returns {Promise<User, APIError>}
+     */
+    getUserName(username) {
+        return this.findOne({username})
+        .exec()
+    },
 }
+module.exports = mongoose.model('users', userSchema)

@@ -1,6 +1,7 @@
 const {Router} = require('express')
 const router = module.exports = Router()
 const mongoose = require('mongoose')
+const {checkNotLogin} = require('../middlewares/check')
 
 router.prefix = '/userInfo'
 
@@ -18,7 +19,7 @@ let blogSchema = new mongoose.Schema({
 // 第三个字段是表名字
 let PersonModel = mongoose.model('person', blogSchema,'person');
 
-router.get('/student',(req,res) => {
+router.get('/student', checkNotLogin, (req,res) => {
 	// 查询方法
 	PersonModel.find({},function (err,data) {
 		if (err) return console.log(`ERR${err}`)
